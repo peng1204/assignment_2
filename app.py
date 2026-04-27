@@ -20,7 +20,7 @@ def load_security_db():
 # 3. 세션 상태 초기화
 # -----------------------------
 if "current_stage" not in st.session_state:
-    st.session_state.current_stage = "GATE"  # GATE -> AUTH -> SURVEY -> DIAGNOSIS -> REPORT
+    st.session_state.current_stage = "GATE" 
 if "auth_status" not in st.session_state:
     st.session_state.auth_status = False
 if "user_name" not in st.session_state:
@@ -29,7 +29,6 @@ if "final_score" not in st.session_state:
     st.session_state.final_score = 0
 if "user_logs" not in st.session_state:
     st.session_state.user_logs = []
-# 사전 설문 데이터 저장소
 if "survey_data" not in st.session_state:
     st.session_state.survey_data = {}
 
@@ -152,7 +151,6 @@ elif st.session_state.current_stage == "REPORT":
     tab1, tab2, tab3 = st.tabs(["✨ 종합 분석", "🔍 오답 노트", "💡 맞춤 솔루션"])
 
     with tab1:
-        # [유형 부여 로직]
         score = st.session_state.final_score
         if score == 10:
             type_title = "🏅 완벽한 살림꾼"
@@ -194,10 +192,10 @@ elif st.session_state.current_stage == "REPORT":
     with tab3:
         st.subheader(f"{st.session_state.user_name}님을 위한 맞춤 솔루션")
         
-        # [설문 데이터와 퀴즈 결과 연동 로직]
+        # 설문 데이터, 퀴즈 결과 연결
         survey = st.session_state.survey_data
         
-        # 특정 카테고리 오답 여부 확인 (예: 용기 재질)
+        # 카테고리 오답 여부 확인
         container_fail = any(
             d['category'] == "용기 재질" and st.session_state.user_logs[i] != d['answer'] 
             for i, d in enumerate(diagnostic_data)
